@@ -36,7 +36,7 @@ module RubyPbuilder
               Dir.chdir(source_directory) do  
                 unless distribution.ubuntu?
                   if distribution.unstable?
-                    sh "dch #{dch_options} --release ''"              
+                    sh "dch #{dch_options} --distribution 'unstable' --release ''"              
                   else
                     sh "dch #{dch_options} --local #{distribution.local_name} --distribution #{distribution} 'Release from unstable'"              
                   end
