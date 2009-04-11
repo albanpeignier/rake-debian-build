@@ -2,12 +2,13 @@ module RubyPbuilder
   class Package < AbstractPackage
 
     attr_reader :name
-    attr_accessor :package, :version, :signing_key, :debian_increment, :exclude_from_build
+    attr_accessor :package, :version, :signing_key, :debian_increment, :exclude_from_build, :source_provider
 
     def init
       @debian_increment = 1
       # TODO use a class attribute
       @signing_key = ENV['KEY']
+      @source_provider = AptSourceProvider.new
     end
 
     def define
@@ -15,24 +16,12 @@ module RubyPbuilder
 
       namespace @name do
         namespace "source" do
-          desc "Create source directory for #{package} #{version}"
-          task "tarball" do
+
+          desc "Retrieve source for #{package} #{version}"
+          task "directory" do
             mkdir_p sources_directory
             Dir.chdir(sources_directory) do
-              get source_tarball_url
-            end
-          end
-
-          desc "Retrieve source tarball for #{package} #{version}"
-          task "directory" => "tarball" do
-            Dir.chdir(sources_directory) do
-              uncompress source_tarball_name
-
-              if source_tarball_name.match /bz2$/ 
-                sh "bunzip2 -c #{source_tarball_name} | gzip -c > #{orig_source_tarball_name}" unless File.exists?(orig_source_tarball_name)
-              else
-                sh "ln -fs #{source_tarball_name} #{orig_source_tarball_name}"
-              end
+              @source_provider.retrieve(self)
             end
 
             copy_debian_files
@@ -148,28 +137,6 @@ module RubyPbuilder
 
     def sources_directory
       "#{Package.build_directory}/sources"
-    end
-
-    def source_tarball_url
-      remote_directory = 
-        unless package == :hpklinux 
-          package.to_s
-        else
-          "audioscience" 
-        end
-
-      "http://www.rivendellaudio.org/ftpdocs/#{remote_directory}/#{source_tarball_name}"
-    end
-
-    def source_tarball_name
-      case package
-      when :rivendell
-        "rivendell-#{version}.tar.gz"
-      when :hpklinux 
-        "hpklinux-#{version}.tar.bz2"
-      when :gpio
-        "gpio-#{version}.tar.gz"
-      end
     end
 
     def orig_source_tarball_name

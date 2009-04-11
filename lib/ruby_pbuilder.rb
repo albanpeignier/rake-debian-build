@@ -6,6 +6,8 @@ require "ruby_pbuilder/platform"
 
 require "ruby_pbuilder/pbuilder"
 
+require "ruby_pbuilder/source_providers"
+
 require "ruby_pbuilder/abstract_package"
 require "ruby_pbuilder/package"
 require "ruby_pbuilder/module_package"
