@@ -10,10 +10,11 @@ namespace :pbuilder do
     RubyPbuilder::Platform.each do |platform| 
       desc "Create pbuilder base image for #{platform}"
       task platform.task_name do
-        platform.pbuilder.exec :create
+        platform.pbuilder.exec :create unless platform.pbuilder_enabled?
       end
     end
   end
+  task :create => Platform.all.collect { |platform| "create:#{platform.task_name}" }
 
   desc "Update pbuilder"
   task :update do
