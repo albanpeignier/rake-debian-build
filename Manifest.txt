@@ -1,4 +1,5 @@
 Manifest.txt
+README.rdoc
 Rakefile
 lib/debian/build.rb
 lib/debian/build/abstract_package.rb
@@ -14,6 +15,7 @@ lib/debian/build/source_providers.rb
 lib/debian/build/tasks.rb
 lib/debian/build/uploader.rb
 lib/ruby_pbuilder.rb
+rake-debian-build.gemspec
 rivendell-passenger.changes
 spec/debian/build/source_providers_spec.rb
 spec/debian/build/uploader_spec.rb
