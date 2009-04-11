@@ -60,7 +60,7 @@ module RubyPbuilder
                   dpkg_buildpackage_options << "-sa"
                 end
 
-                sh "dpkg-buildpackage -rfakeroot #{dpkg_buildpackage_options.join(' ')} -S"
+                sh "dpkg-buildpackage -rfakeroot #{dpkg_buildpackage_options.join(' ')} -S -I.git"
               end
             end
           end
