@@ -17,14 +17,10 @@ namespace "packages" do
   end
 
   task :upload do
-    lock_file = "/var/lib/debarchiver/incoming/debarchiver.lock"
-    begin
-      sh "ssh debian.tryphon.org touch #{lock_file}"
+    Debian::Build.Uploader.default.lock do
       Debian::Build.packages.each do |package|
         Rake::Task["package:#{package}:upload"].invoke
       end
-    ensure
-      sh "ssh debian.tryphon.org rm -f #{lock_file}"
     end
   end
   

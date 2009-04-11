@@ -13,6 +13,8 @@ require "debian/build/pbuilder"
 
 require "debian/build/source_providers"
 
+require "debian/build/uploader"
+
 require "debian/build/abstract_package"
 require "debian/build/package"
 require "debian/build/module_package"

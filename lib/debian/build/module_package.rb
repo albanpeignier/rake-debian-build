@@ -29,7 +29,7 @@ module Debian::Build
         desc "Upload packages for #{package}"
         task "upload" do
           Platform.each do |platform|
-            sh "rsync -av #{platform.build_result_directory}/#{package}-*.deb debian.tryphon.org:/var/lib/debarchiver/incoming/#{platform.distribution}"
+            Uploader.rsync Dir["#{platform.build_result_directory}/#{package}-*.deb"], platform.distribution
           end
         end
 

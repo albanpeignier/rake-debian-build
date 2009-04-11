@@ -102,7 +102,7 @@ module Debian::Build
 
           changes_files.flatten!
 
-          sh "dupload -t tryphon #{changes_files.join(' ')}"
+          Uploader.default.dupload changes_files
         end
 
         desc "Clean files created for #{package} #{version}"
