@@ -1,4 +1,4 @@
-module RubyPbuilder
+module Debian::Build
   class ModulePackage < AbstractPackage
 
     def module_name

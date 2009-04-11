@@ -1,6 +1,6 @@
 require 'rake/tasklib'
 
-module RubyPbuilder
+module Debian::Build
 
   @packages = []
 
@@ -22,7 +22,7 @@ module RubyPbuilder
       yield self if block_given?
       define
 
-      RubyPbuilder.packages << name.to_sym
+      Debian::Build.packages << name.to_sym
     end
     
     def init

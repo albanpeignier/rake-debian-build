@@ -1,16 +1,16 @@
 namespace "packages" do
   desc "Create packages source for all packages"
 
-  desc "Build source packages for #{RubyPbuilder.packages.join(' ')}"
+  desc "Build source packages for #{Debian::Build.packages.join(' ')}"
   task :sources
 
-  desc "Build binary packages for #{RubyPbuilder.packages.join(' ')}"
+  desc "Build binary packages for #{Debian::Build.packages.join(' ')}"
   task :binaries
 
-  desc "Upload packages for #{RubyPbuilder.packages.join(' ')}"
+  desc "Upload packages for #{Debian::Build.packages.join(' ')}"
   task :upload
 
-  RubyPbuilder.packages.each do |package|
+  Debian::Build.packages.each do |package|
     task :sources => "package:#{package}:source:all"
     task :binaries => "package:#{package}:pbuild:all"
     task :clean => "package:#{package}:clean"
@@ -20,7 +20,7 @@ namespace "packages" do
     lock_file = "/var/lib/debarchiver/incoming/debarchiver.lock"
     begin
       sh "ssh debian.tryphon.org touch #{lock_file}"
-      RubyPbuilder.packages.each do |package|
+      Debian::Build.packages.each do |package|
         Rake::Task["package:#{package}:upload"].invoke
       end
     ensure

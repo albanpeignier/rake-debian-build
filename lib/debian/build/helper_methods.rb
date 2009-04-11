@@ -1,4 +1,4 @@
-module RubyPbuilder
+module Debian::Build
   module HelperMethods
 
     def sudo(*args)

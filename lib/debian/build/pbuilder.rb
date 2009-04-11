@@ -1,4 +1,4 @@
-module RubyPbuilder
+module Debian::Build
   class PBuilder
     extend BuildDirectoryMethods
     include HelperMethods

@@ -1,4 +1,4 @@
-module RubyPbuilder
+module Debian::Build
   class Package < AbstractPackage
 
     attr_reader :name

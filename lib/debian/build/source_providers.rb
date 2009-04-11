@@ -1,11 +1,11 @@
 require 'fileutils'
 require 'uri'
 
-module RubyPbuilder
+module Debian::Build
 
   class TarballSourceProvider
     include FileUtils
-    include RubyPbuilder::HelperMethods
+    include Debian::Build::HelperMethods
 
     def initialize(url)
       @url = url
@@ -17,7 +17,7 @@ module RubyPbuilder
 
     class PackageRetriever
       include FileUtils
-      include RubyPbuilder::HelperMethods
+      include Debian::Build::HelperMethods
 
       attr_reader :package
       

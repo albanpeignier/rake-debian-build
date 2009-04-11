@@ -1,4 +1,4 @@
-module RubyPbuilder
+module Debian::Build
   module BuildDirectoryMethods
 
     @@build_directory = '/var/tmp/debian'
