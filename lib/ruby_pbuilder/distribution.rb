@@ -31,13 +31,14 @@ module RubyPbuilder
       File.expand_path "#{Platform.build_directory}/sources/#{distribution}"
     end
 
+    @@mirrors = { :debian => "http://ftp.debian.org/debian", :ubuntu => 'http://archive.ubuntu.com/ubuntu' }
+
+    def self.mirrors=(mirrors)
+      @@mirrors.update(mirrors)
+    end
+
     def mirror
-      case flavor
-      when :debian
-        "http://ftp.fr.debian.org/debian"
-      when :ubuntu
-        'http://fr.archive.ubuntu.com/ubuntu'
-      end
+      @@mirrors[flavor]
     end
 
     def ubuntu?
