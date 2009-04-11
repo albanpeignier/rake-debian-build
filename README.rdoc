@@ -1,0 +1,124 @@
+= Gepetto
+
+* http://github.com/albanpeignier/rake-debian-build
+
+== DESCRIPTION:
+
+A rake task suite to build debian/ubuntu packages.
+
+Manage for your apt-get source or tarball download, dpkg-buildpackage, dch, pbuilder, dupload, builds for stable/testing/unstable/hardy/intrepid i386/amd64, etc ...
+
+== FEATURES:
+
+* sources download (tarball or apt-get source)
+* source packaging
+* binary packaging
+* upload
+* pbuilder encapsulation
+* support multiple platforms : debian/ubuntu, stable/testing/unstable/hardy/intrepid, i386/amd64
+* build everything in a command line
+* remote build
+
+== SYNOPSIS:
+
+Define your packages in your Rakefile:
+
+  require 'debian/build'
+  include Debian::Build
+
+  require 'debian/build/config'
+
+  namespace "package" do
+
+    Package.new(:hpklinux) do |p|
+      p.version = '3.08.05'
+      p.debian_increment = 2
+
+      p.source_provider = TarballSourceProvider.new('http://www.rivendellaudio.org/ftpdocs/audioscience/hpklinux-#{version}.tar.bz2')
+    end
+
+    main_source_provider = TarballSourceProvider.new('http://www.rivendellaudio.org/ftpdocs/#{name}/#{name}-#{version}.tar.gz')
+  
+    Package.new(:rivendell) do |p|
+      p.version = '1.3.0'
+      p.debian_increment = 1
+      p.source_provider = main_source_provider
+    end
+
+    Package.new(:gpio) do |p|
+      p.version = '1.0.0'
+      p.debian_increment = 2
+      p.source_provider = main_source_provider
+    end
+
+    ModulePackage.new('gpio-module')
+
+    ModulePackage.new('hpklinux-module')
+
+  end
+
+  require 'debian/build/tasks'
+
+Configure your environement (in config.rb) :
+
+  Distribution.mirrors = { 
+    :debian => 'http://localhost:9999/debian',
+    :ubuntu => 'http://localhost:9999/ubuntu'
+  }
+
+  Uploader.default.host = "debian.tryphon.org"
+  Uploader.default.nickname = "tryphon"
+
+Setup your environment:
+
+  rake setup
+
+Create pbuilder images:
+
+  rake pbuilder:create
+
+Build all source package
+
+  rake packages:sources
+
+Build all binary package
+
+  rake packages:binaries
+
+Upload all packages
+
+  rake packages:upload
+
+== REQUIREMENTS:
+
+* pbuilder, dupload, devscripts
+
+== INSTALL:
+
+  gem sources -a http://gems.github.com
+  sudo gem install albanpeignier-rake-debian-build
+
+== LICENSE:
+
+(The MIT License)
+
+Copyright (c) 2009 Alban Peignier
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
