@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.date = %q{2009-04-12}
   s.email = ["alban.peignier@free.fr"]
   s.extra_rdoc_files = ["Manifest.txt"]
-  s.files = ["Manifest.txt", "README.rdoc", "Rakefile", "lib/debian/build.rb", "lib/debian/build/abstract_package.rb", "lib/debian/build/build_directory_methods.rb", "lib/debian/build/config.rb", "lib/debian/build/distribution.rb", "lib/debian/build/helper_methods.rb", "lib/debian/build/module_package.rb", "lib/debian/build/package.rb", "lib/debian/build/pbuilder.rb", "lib/debian/build/platform.rb", "lib/debian/build/source_providers.rb", "lib/debian/build/tasks.rb", "lib/debian/build/uploader.rb", "lib/ruby_pbuilder.rb", "rake-debian-build.gemspec", "rivendell-passenger.changes", "spec/debian/build/source_providers_spec.rb", "spec/debian/build/uploader_spec.rb", "spec/spec_helper.rb", "tasks/packages.rake", "tasks/pbuilder.rake", "tasks/setup.rake"]
+  s.files = ["Manifest.txt", "README.rdoc", "Rakefile", "lib/debian/build.rb", "lib/debian/build/abstract_package.rb", "lib/debian/build/build_directory_methods.rb", "lib/debian/build/config.rb", "lib/debian/build/distribution.rb", "lib/debian/build/helper_methods.rb", "lib/debian/build/module_package.rb", "lib/debian/build/package.rb", "lib/debian/build/pbuilder.rb", "lib/debian/build/platform.rb", "lib/debian/build/source_providers.rb", "lib/debian/build/tasks.rb", "lib/debian/build/uploader.rb", "lib/ruby_pbuilder.rb", "rake-debian-build.gemspec", "spec/debian/build/source_providers_spec.rb", "spec/debian/build/uploader_spec.rb", "spec/spec_helper.rb", "tasks/packages.rake", "tasks/pbuilder.rake", "tasks/setup.rake"]
   s.has_rdoc = true
   s.rdoc_options = ["--main", "README.txt"]
   s.require_paths = ["lib"]
