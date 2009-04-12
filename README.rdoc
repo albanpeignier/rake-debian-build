@@ -1,4 +1,4 @@
-= Gepetto
+= Rake Debian Build
 
 * http://github.com/albanpeignier/rake-debian-build
 
@@ -6,11 +6,11 @@
 
 A rake task suite to build debian/ubuntu packages.
 
-Manage for your apt-get source or tarball download, dpkg-buildpackage, dch, pbuilder, dupload, builds for stable/testing/unstable/hardy/intrepid i386/amd64, etc ...
+Manage for your apt-get source or tar-ball download, dpkg-buildpackage, dch, pbuilder, dupload, builds for stable/testing/unstable/hardy/intrepid i386/amd64, etc ...
 
 == FEATURES:
 
-* sources download (tarball or apt-get source)
+* sources download (tar-ball or apt-get source)
 * source packaging
 * binary packaging
 * upload
@@ -21,8 +21,9 @@ Manage for your apt-get source or tarball download, dpkg-buildpackage, dch, pbui
 
 == SYNOPSIS:
 
-Define your packages in your Rakefile:
+Define your packages in your Rakefile. For example (from {Rivendell Debian packages}[http://github.com/albanpeignier/rivendell-debian]) :
 
+  require 'rubygems'
   require 'debian/build'
   include Debian::Build
 
@@ -59,7 +60,7 @@ Define your packages in your Rakefile:
 
   require 'debian/build/tasks'
 
-Configure your environement (in config.rb) :
+Configure your environment (in config.rb) :
 
   Distribution.mirrors = { 
     :debian => 'http://localhost:9999/debian',
