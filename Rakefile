@@ -2,7 +2,7 @@
 
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.new('rake-debian-build', '1.0') do |p|
+$hoe = Hoe.new('rake-debian-build', '1.0.1') do |p|
   p.developer("Alban Peignier", "alban.peignier@free.fr")
   p.summary = "Rake tasks to build debian packages"
 
