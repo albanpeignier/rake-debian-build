@@ -30,6 +30,15 @@ describe Uploader do
 
   end
 
+  describe "lock file" do
+    
+    it "should be debarchiver.lock in incoming directory" do
+      @uploader.incoming = "path/to/incoming"
+      @uploader.lock_file.should == "path/to/incoming/debarchiver.lock"
+    end
+
+  end
+
   describe "lock" do
 
     before(:each) do

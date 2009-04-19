@@ -5,9 +5,6 @@ module Debian::Build
   class Uploader
     include FileUtils
 
-    @@default = Uploader.new
-    def self.default; @@default end
-
     # TODO nickname could be used to determinate incoming and host
     attr_accessor :nickname
     attr_accessor :incoming, :host
@@ -28,7 +25,7 @@ module Debian::Build
     end
 
     def lock_file
-      File.join(incoming, "debarchiver.lock")
+      File.join(self.incoming, "debarchiver.lock")
     end
 
     def dupload(*changes_files)
@@ -39,6 +36,9 @@ module Debian::Build
     def rsync(target_directory, *files)
       sh "rsync -av #{files.join(' ')} #{host}:#{incoming}/#{target_directory}"
     end
+
+    @@default = Uploader.new
+    def self.default; @@default end
 
   end
 
