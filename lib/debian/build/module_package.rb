@@ -29,7 +29,7 @@ module Debian::Build
         desc "Upload packages for #{package}"
         task "upload" do
           Platform.each do |platform|
-            Uploader.rsync Dir["#{platform.build_result_directory}/#{package}-*.deb"], platform.distribution
+            Uploader.default.rsync platform.distribution, Dir["#{platform.build_result_directory}/#{package}-*.deb"]
           end
         end
 
