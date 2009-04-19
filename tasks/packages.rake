@@ -17,7 +17,7 @@ namespace "packages" do
   end
 
   task :upload do
-    Debian::Build.Uploader.default.lock do
+    Debian::Build::Uploader.default.lock do
       Debian::Build.packages.each do |package|
         Rake::Task["package:#{package}:upload"].invoke
       end
