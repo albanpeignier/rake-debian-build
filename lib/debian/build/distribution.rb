@@ -24,7 +24,7 @@ module Debian::Build
 
     def self.ubuntu_distributions
       @@ubuntu_distributions ||= 
-        %w{hardy intrepid}.collect { |distribution| Distribution.new(:ubuntu, distribution) }
+        %w{hardy intrepid jaunty}.collect { |distribution| Distribution.new(:ubuntu, distribution) }
     end
 
     def source_result_directory
@@ -49,7 +49,7 @@ module Debian::Build
       [ :unstable, :intrepid ].include? distribution
     end
     
-    @@local_names = { :stable => 'lenny', :testing => 'squeeze', :intrepid => 'ubuntu', :hardy => 'hardy' }
+    @@local_names = { :stable => 'lenny', :testing => 'squeeze', :intrepid => 'intrepid', :hardy => 'hardy', :jaunty => 'ubuntu' }
     def local_name
       @@local_names[distribution]
     end
