@@ -87,22 +87,13 @@ module Debian::Build
 
         desc "Upload packages for #{package} #{version}"
         task "upload" do
-          changes_files = Dir.glob("#{sources_directory}/#{package}_#{debian_version}*_source.changes")
-
-          Platform.each do |platform|
-            platform_changes_files = Dir.glob("#{platform.build_result_directory}/#{package}_#{debian_version}*_#{platform.architecture}.changes")
-
-            unless platform_changes_files.empty?
-              # deb packages for architect all shouldn't be uploaded twice
-              sh "sed -i '/_all.deb/ d' #{platform_changes_files.join(' ')}" if platform.architecture != 'i386'
-
-              changes_files << platform_changes_files
-            end
-          end
-
-          changes_files.flatten!
-
           Uploader.default.dupload changes_files
+        end
+
+        desc "Run lintian on package #{package}"
+        task "lintian" do
+          redirect = ENV['LINTIAN_OUTPUT'] ? ">> #{ENV['LINTIAN_OUTPUT']}" : ""
+          sh "lintian #{changes_files.join(' ')} #{redirect}"
         end
 
         desc "Clean files created for #{package} #{version}"
@@ -148,7 +139,25 @@ module Debian::Build
     end
 
     def debian_version
-      "#{version}-#{debian_increment}"    
+      "#{version}-#{debian_increment}"   
+    end
+
+    def changes_files
+      changes_files = Dir.glob("#{sources_directory}/#{package}_#{debian_version}*_source.changes")
+
+      Platform.each do |platform|
+        platform_changes_files = Dir.glob("#{platform.build_result_directory}/#{package}_#{debian_version}*_#{platform.architecture}.changes")
+
+        unless platform_changes_files.empty?
+          # deb packages for architect all shouldn't be uploaded twice
+          sh "sed -i '/_all.deb/ d' #{platform_changes_files.join(' ')}" if platform.architecture != 'i386'
+
+          changes_files << platform_changes_files
+        end
+      end
+
+      changes_files.flatten!
+      changes_files
     end
 
     def package_files(directory = '.')

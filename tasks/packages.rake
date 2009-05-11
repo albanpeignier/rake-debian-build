@@ -23,7 +23,14 @@ namespace "packages" do
       end
     end
   end
-  
+
+  task :lintian do
+    lintian_sub_tasks = Debian::Build.packages.collect do |package|
+      "package:#{package}:lintian"
+    end
+    sh "rake #{lintian_sub_tasks.join(' ')} | sort -u > lintian-#{Time.now.strftime("%Y%m%d%H%M")}.txt"
+  end
+
 end
 
 task :packages => [ "packages:sources", "packages:binaries", "packages:upload" ]

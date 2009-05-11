@@ -2,9 +2,10 @@
 
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.new('rake-debian-build', '1.0.2') do |p|
+$hoe = Hoe.new('rake-debian-build', '1.0.4') do |p|
   p.developer("Alban Peignier", "alban.peignier@free.fr")
   p.summary = "Rake tasks to build debian packages"
+  p.url = "http://github.com/albanpeignier/rake-debian-build"
 
   p.rubyforge_name       = p.name # TODO this is default value
 

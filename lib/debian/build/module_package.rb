@@ -33,6 +33,10 @@ module Debian::Build
           end
         end
 
+        task "lintian" do
+          # TODO : implement lintian on ModulePackage
+        end
+
         # TODO : remove this mock
         namespace :source do 
           task :all 
