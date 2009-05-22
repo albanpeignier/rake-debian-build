@@ -12,10 +12,13 @@ module Debian::Build
       end
     end
 
-
     def initialize(distribution, architecture)
       @distribution = distribution
       @architecture = architecture
+    end
+
+    def self.find_by_name(name)
+      self.all.find { |p| p.to_s == name }
     end
 
     def self.supported_architectures
