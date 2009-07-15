@@ -46,12 +46,12 @@ module Debian::Build
     end
 
     def unstable?
-      [ :unstable, :intrepid ].include? distribution
+      [ :unstable, :jaunty ].include? distribution
     end
     
-    @@local_names = { :stable => 'lenny', :testing => 'squeeze', :intrepid => 'intrepid', :hardy => 'hardy', :jaunty => 'ubuntu' }
+    @@local_names = { :stable => 'lenny', :testing => 'squeeze' }
     def local_name
-      @@local_names[distribution]
+      @@local_names.fetch(distribution,self.to_s)
     end
 
     def to_s

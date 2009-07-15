@@ -34,18 +34,10 @@ module Debian::Build
 
               dch_options="--preserve --force-distribution"
               Dir.chdir(source_directory) do  
-                unless distribution.ubuntu?
-                  if distribution.unstable?
-                    sh "dch #{dch_options} --distribution 'unstable' --release ''"              
-                  else
-                    sh "dch #{dch_options} --local #{distribution.local_name} --distribution #{distribution} 'Release from unstable'"              
-                  end
+                if not distribution.ubuntu? and distribution.unstable?
+                  sh "dch #{dch_options} --distribution 'unstable' --release ''"              
                 else
-                  if distribution.unstable?
-                    sh "dch #{dch_options} --local ubuntu --distribution #{distribution} 'Release from debian/unstable'"
-                  else
-                    sh "dch #{dch_options} --local #{distribution.local_name} --distribution #{distribution} 'Release from unstable'"              
-                  end
+                  sh "dch #{dch_options} --local #{local_name(distribution)} --distribution #{distribution} 'Release from unstable'"
                 end
 
                 dpkg_buildpackage_options = []
@@ -111,9 +103,17 @@ module Debian::Build
       end
     end
 
+    def local_name(distribution)
+      unless distribution.unstable?
+        distribution.local_name
+      else
+        "ubuntu" if distribution.ubuntu?  
+      end
+    end
+
     def dsc_file(platform)
       suffix = 
-        if local_name = platform.local_name
+        if local_name = local_name(platform)
           "#{local_name}1"
         else
           ""
