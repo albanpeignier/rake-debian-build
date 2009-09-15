@@ -14,8 +14,8 @@ lib/debian/build/platform.rb
 lib/debian/build/source_providers.rb
 lib/debian/build/tasks.rb
 lib/debian/build/uploader.rb
-lib/ruby_pbuilder.rb
 rake-debian-build.gemspec
+script/pbuilder
 spec/debian/build/source_providers_spec.rb
 spec/debian/build/uploader_spec.rb
 spec/spec_helper.rb
