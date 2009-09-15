@@ -51,7 +51,7 @@ module Debian::Build
     def pbuilder(options = {})
       PBuilder.new do |p|
         p[:basetgz] = pbuilder_base_file
-        p[:othermirror] = "'deb file:#{build_result_directory} ./'"
+        p[:othermirror] = "'deb file:#{build_result_directory} ./|deb http://www.debian-multimedia.org #{distribution} main '"
         p[:bindmounts] = p[:buildresult] = build_result_directory
         p[:distribution] = distribution
         p[:hookdir] = default_hooks_directory
