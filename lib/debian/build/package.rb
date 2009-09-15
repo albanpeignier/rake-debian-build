@@ -123,7 +123,11 @@ module Debian::Build
 
     def copy_debian_files
       rm_rf "#{source_directory}/debian"
-      cp_r "#{package}/debian", "#{source_directory}/debian"
+      cp_r debian_directory, "#{source_directory}/debian"
+    end
+
+    def debian_directory
+      ["debian", "#{package}/debian"].find { |d| File.exists?(d) }
     end
 
     def sources_directory
