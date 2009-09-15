@@ -72,4 +72,24 @@ module Debian::Build
 
   end
 
+  class DebianTarballProvider
+
+    def retrieve(package)
+      mkdir_p package.source_directory
+      sh "cp #{Rake.original_dir}/#{package.name}-#{package.version}.tgz #{package.source_directory}"
+    end
+
+  end
+
+  class GitExportProvider
+
+    def retrieve(package)
+      mkdir_p package.source_directory
+      Dir.chdir(Rake.original_dir) do
+        sh "git archive HEAD | tar -xf - -C #{package.source_directory}"
+      end
+    end
+
+  end
+
 end
