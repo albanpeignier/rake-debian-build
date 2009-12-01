@@ -188,5 +188,10 @@ module Debian::Build
       package_files(directory).find_all { |f| f.match /\.deb$/ }
     end
 
+    def get_binding
+      binding
+    end
+
   end
+
 end

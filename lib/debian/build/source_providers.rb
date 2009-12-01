@@ -40,15 +40,7 @@ module Debian::Build
       end
 
       def tarball_url
-        unless @tarball_url
-          def package.get_binding
-            binding
-          end
-
-          @tarball_url = eval( '"' + @url + '"', package.get_binding)
-        end
-
-        @tarball_url
+        @tarball_url ||= eval( '"' + @url + '"', package.get_binding)
       end
 
       def tarball_name
@@ -74,9 +66,21 @@ module Debian::Build
 
   class DebianTarballProvider
 
+    def initialize(tarball_name_pattern = nil)
+      @tarball_name_pattern = tarball_name_pattern
+    end
+
+    def tarball_name_pattern
+      @tarball_name_pattern ||= '#{name}-#{version}.tgz'
+    end
+
+    def tarball_name(package)
+      eval( '"' + tarball_name_pattern + '"', package.get_binding)
+    end
+
     def retrieve(package)
       mkdir_p package.source_directory
-      sh "cp #{Rake.original_dir}/#{package.name}-#{package.version}.tgz #{package.source_directory}"
+      sh "cp #{Rake.original_dir}/#{tarball_name(package)} #{package.source_directory}"
     end
 
   end
