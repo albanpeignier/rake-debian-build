@@ -24,7 +24,7 @@ module Debian::Build
 
     def self.ubuntu_distributions
       @@ubuntu_distributions ||= 
-        %w{hardy intrepid jaunty}.collect { |distribution| Distribution.new(:ubuntu, distribution) }
+        %w{hardy jaunty karmic}.collect { |distribution| Distribution.new(:ubuntu, distribution) }
     end
 
     def source_result_directory
