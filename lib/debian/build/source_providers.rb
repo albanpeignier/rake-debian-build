@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'uri'
+require 'tempfile'
 
 module Debian::Build
 
@@ -36,6 +37,63 @@ module Debian::Build
           sh "bunzip2 -c #{tarball_name} | gzip -c > #{orig_tarball_name}" unless File.exists?(orig_tarball_name)
         else
           sh "ln -fs #{tarball_name} #{orig_tarball_name}"
+        end
+      end
+
+      def tarball_url
+        @tarball_url ||= eval( '"' + @url + '"', package.get_binding)
+      end
+
+      def tarball_name
+        File.basename URI.parse(tarball_url).path
+      end
+
+      def orig_tarball_name
+        package.orig_source_tarball_name
+      end
+
+    end
+
+  end
+
+  class ZipSourceProvider
+    include FileUtils
+    include Debian::Build::HelperMethods
+
+    def initialize(url)
+      @url = url
+    end
+
+    def retrieve(package)
+      PackageRetriever.new(@url, package).retrieve
+    end
+
+    class PackageRetriever
+      include FileUtils
+      include Debian::Build::HelperMethods
+
+      attr_reader :package
+      
+      def initialize(url, package)
+        @url, @package = url, package
+      end
+      
+      def retrieve
+        get tarball_url
+        uncompress tarball_name
+        prepare_orig_tarball
+      end
+
+      def prepare_orig_tarball
+        return if File.exists?(orig_tarball_name)
+        Tempfile.open("prepare_orig_tarball") do |temp_directory|
+          temp_directory_path = temp_directory.path
+          temp_directory.delete
+          mkdir_p temp_directory_path
+
+          sh "unzip -o -qq -d #{temp_directory_path} #{tarball_name}"
+          sh "tar -czf #{orig_tarball_name} -C #{temp_directory_path} ."
+          rm_rf temp_directory_path
         end
       end
 
